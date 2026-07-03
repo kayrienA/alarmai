@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alarm AI: Bangun & Bergerak!</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+    <!-- Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+</head>
+
+<body>
+    <!-- Background: animated canvas grid + particles -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Background: radial depth glows -->
+    <div class="bg-glows">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+        <div class="glow glow-3"></div>
+        <div class="glow glow-4"></div>
+        <div class="glow glow-5"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>Alarm AI <span>Interaktif</span></h1>
+            <p>Buktikan kamu sudah bangun dengan menunjukkan barang yang diminta ke kamera</p>
+        </header>
+
+        <div id="loading-overlay" class="overlay active">
+            <div class="spinner"></div>
+            <p>Memuat Model AI... Harap tunggu.</p>
+        </div>
+
+        <section id="setup-section" class="card">
+            <h2>Pengaturan Alarm</h2>
+            <div class="time-picker-wrapper">
+                <div class="time-picker-decoration top-left"></div>
+                <div class="time-picker-decoration top-right"></div>
+                <div class="time-picker-decoration bottom-left"></div>
+                <div class="time-picker-decoration bottom-right"></div>
+                <div class="time-picker">
+                    <label for="alarm-time" class="time-picker-label">WAKTU ALARM</label>
+                    <div class="input-container" id="time-picker-container">
+                        <input type="time" id="alarm-time" required>
+                        <svg class="icon-clock" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <button id="btn-save-alarm" class="btn primary">Simpan Alarm</button>
+            <button id="btn-cancel-alarm" class="btn secondary hidden">Batalkan Alarm</button>
+
+            <div id="active-alarm-display" class="hidden">
+                <p>Alarm aktif untuk:</p>
+                <h3 id="display-time">--:--</h3>
+            </div>
+
+            <div class="info-box">
+                <h4>Daftar Barang yang Mungkin Diminta:</h4>
+                <ul id="label-list">
+                    <li>Memuat daftar barang...</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Bagian Saat Alarm Berbunyi -->
+        <section id="alarm-section" class="card hidden">
+            <div class="alert-banner">
+                <h2>ALARM BERBUNYI!</h2>
+                <p>Waktunya bangun!</p>
+            </div>
+
+            <div class="challenge-box">
+                <p>Untuk mematikan alarm, tunjukkan:</p>
+                <h1 id="target-object" class="target-highlight">Memuat...</h1>
+            </div>
+
+            <div class="camera-container">
+                <div id="webcam-container"></div>
+                <div class="camera-overlay">
+                    <p id="camera-status">Mengaktifkan kamera...</p>
+                </div>
+            </div>
+
+            <div class="detection-status">
+                <h3>Status Deteksi:</h3>
+                <div id="progress-bars-container">
+
+                </div>
+                <p id="success-message" class="success-text hidden">Selamat! Kamu sudah bangun. Semangat hari ini!</p>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
